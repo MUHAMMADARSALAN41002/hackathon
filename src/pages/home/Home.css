@@ -4,3 +4,8 @@
     left: 20px;
     position: fixed;
 }
+
+.heading-first {
+text-transform: uppercase;
+font-size: 70px;
+}
