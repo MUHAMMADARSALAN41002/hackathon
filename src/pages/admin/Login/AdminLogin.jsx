@@ -13,12 +13,14 @@ const Login = () => {
 
     const onFinish = (values) => {
         const {email, password} = values;
+        
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;    
+                console.log('ok')
                 // Signed in 
-                getDocs(collection(db, "admin")).then(querySnapshot => {
+                getDocs(collection(db, "admins")).then(querySnapshot => {
                     querySnapshot.forEach((doc) => {           
                             let useremail = doc.data().email;
                             if (useremail === user.email) {
@@ -26,6 +28,7 @@ const Login = () => {
                                 localStorage.setItem('currentuser', useruid)
                                 message.success('Successfully login');            
                                 navigate('/homeadmin')
+                                
                             } else {
                                 message.error('admin not exists'); 
                             }

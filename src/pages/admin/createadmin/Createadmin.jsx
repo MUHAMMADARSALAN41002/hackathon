@@ -1,16 +1,14 @@
 import React from 'react';
 import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input, Button, message } from 'antd';
-import './Signup.css'
+
 import { Link } from 'react-router-dom';
-import { auth } from '../../firebase/Config';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { db } from '../../firebase/Config';
 import { doc, setDoc } from "firebase/firestore";
-import Navbar from '../../components/navbar/Navbar';
+import { auth, db } from '../../../firebase/Config';
 
-const Signup = () => {
+const Createadmin = () => {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
@@ -22,13 +20,12 @@ const Signup = () => {
         // Signed in 
         const user = userCredential.user;
         const useruid = user.uid;
-        localStorage.setItem('currentuser', useruid)
-        setDoc(doc(db, "users", user.uid), {
-          username,
+        setDoc(doc(db, "admins", user.uid), {
+          name: username,
           email
         });
-        message.success('Successfully account created');
-        navigate('/home')
+        message.success('Successfully admin created');
+        navigate('/homeadmin')
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -37,19 +34,9 @@ const Signup = () => {
   };
 
   return (
-  <> <Navbar /> <div className='signup'>
+  <>  <div className='signup'>
   <Form name="normal_signup" className="signup-form" onFinish={onFinish} >
-    <h1 className='heading-signup' id='sign-heading-signup' > Welcome to SMIT </h1>
-    <Form.Item name="rollNo"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your Roll No!',
-        },
-      ]}
-    >
-      <Input className='input-signup input-here' placeholder="Roll No" />
-    </Form.Item>
+    <h1 className='heading-signup' id='sign-heading-signup' > Create Admin </h1>
     <Form.Item name="username"
       rules={[
         {
@@ -58,7 +45,7 @@ const Signup = () => {
         },
       ]}
     >
-      <Input className='input-signup input-here' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+      <Input className='input-signup input-here' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Admin Name" />
     </Form.Item>
 
     <Form.Item name="email"
@@ -73,7 +60,7 @@ const Signup = () => {
         },
       ]}
     >
-      <Input className='input-signup input-here' prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+      <Input className='input-signup input-here' prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Admin Email" />
     </Form.Item>
 
     <Form.Item name="password" className='input-signup'
@@ -85,7 +72,7 @@ const Signup = () => {
       ]}
       hasFeedback
     >
-      <Input.Password className='input-here' prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
+      <Input.Password className='input-here' prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Admin Password" />
     </Form.Item>
 
     <Form.Item name="confirm" dependencies={['password']} hasFeedback className='input-signup'
@@ -105,18 +92,15 @@ const Signup = () => {
         }),
       ]}
     >
-      <Input.Password className='input-here' prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Confirm Password" />
+      <Input.Password className='input-here' prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Admin Confirm Password" />
     </Form.Item>
-
     <Form.Item >
       <Button type="danger" htmlType="submit">
-        Register
+        Create Admin
       </Button>
-      <br /> <br />
-      Or <Link to="/login" className='link'>Login here!</Link>
     </Form.Item>
   </Form>
 </div></>
   )
 }
-export default Signup;
+export default Createadmin;

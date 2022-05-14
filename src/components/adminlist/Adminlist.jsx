@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { getDocs, collection } from 'firebase/firestore';
 import {  Table } from 'antd';
-import { db } from '../../firebase/Config';
+import {db} from '../../firebase/Config'
 
 const Adminlist = () => {
 
-    const [arrdata, setarrdata] = useState([])
+    const [arrdata1, setarrdata1] = useState([])
 
     useEffect(() => {
         getdata();
@@ -13,8 +13,9 @@ const Adminlist = () => {
     }, [])
 
     let arr = [];
-    const getdata = () => {
-        getDocs(collection(db, "admin")).then((querySnapshot) => {
+    const getdata =  () => {
+        getDocs(collection(db, "admins")).then((querySnapshot) => {
+            console.log(querySnapshot.docs)
             querySnapshot.forEach((doc) => {           
                     let dadminame = doc.data().name;
                     let dadminemail = doc.data().email;
@@ -24,11 +25,12 @@ const Adminlist = () => {
                         arradminemail: dadminemail,
                     })
             })
-            setarrdata(arr)
+            setarrdata1(arr)
         }).catch((err) => {
             console.log(err)
         })
     };
+
 
     const columns = [
         { title: 'S.No', dataIndex: 'sno', key: 'sno', render: (text, object, index) => index + 1},
@@ -37,7 +39,7 @@ const Adminlist = () => {
     ];
 
 
-    const data = arrdata.map((alldata, index) => {
+    const data = arrdata1.map((alldata, index) => {
         const userdata = {
             key: index,
             adminname: alldata.arradminname,
