@@ -25,12 +25,11 @@ const Login = () => {
                             let useremail = doc.data().email;
                             if (useremail === user.email) {
                                 const useruid = user.uid;
-                                localStorage.setItem('currentuser', useruid)
-                                message.success('Successfully login');            
+                                localStorage.setItem('currentuser', useruid)            
                                 navigate('/homeadmin')
                                 
                             } else {
-                                message.error('admin not exists'); 
+                                // message.error('admin not exists'); 
                             }
                     })
                 }).catch((error) => {
@@ -45,7 +44,7 @@ const Login = () => {
             })
     };
     return (
-       <> <div className='login'>
+       <> <div style={{display:"flex", justifyContent:"center", alignItems:"center", width:"100%", height:"100vh"}}>
        <Form name="normal_login" className="login-form" onFinish={onFinish} >
            <h1 className='heading-login' id='sign-heading-login'> Admin Login   </h1> 
            <Form.Item name="email"

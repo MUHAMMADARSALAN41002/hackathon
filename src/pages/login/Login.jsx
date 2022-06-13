@@ -13,6 +13,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onFinish = (values) => {
+        console.log("ok")
         const {email, password} = values;
 
         signInWithEmailAndPassword(auth, email, password)
@@ -26,11 +27,10 @@ const Login = () => {
 
                                 if (useremail === user.email) {
                                     const useruid = user.uid;
-                                    localStorage.setItem('currentuser', useruid)
-                                    message.success('Successfully login');            
+                                    localStorage.setItem('currentuser', useruid)           
                                     navigate('/home')
                                 } else {
-                                    message.error('user not exists'); 
+                                    // message.error('user not exists'); 
                                 }
                         })
                     }).catch((error) => {

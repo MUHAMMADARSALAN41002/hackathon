@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input, Button, message } from 'antd';
 
@@ -7,9 +7,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from '../../../firebase/Config';
+import Navbar from '../../../components/adminnavbar/AdminNavbar';
 
 const Createadmin = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("currentuser")
+    if(user) {
+  
+    } else {
+      navigate('/login')
+    }
+  })
 
   const onFinish = (values) => {
 
@@ -24,7 +33,7 @@ const Createadmin = () => {
           name: username,
           email
         });
-        message.success('Successfully admin created');
+        message.success('Admin Successfully created');
         navigate('/homeadmin')
       })
       .catch((error) => {
@@ -34,7 +43,7 @@ const Createadmin = () => {
   };
 
   return (
-  <>  <div className='signup'>
+  <>  <Navbar /> <div className='signup'>
   <Form name="normal_signup" className="signup-form" onFinish={onFinish} >
     <h1 className='heading-signup' id='sign-heading-signup' > Create Admin </h1>
     <Form.Item name="username"

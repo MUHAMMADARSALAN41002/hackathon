@@ -50,7 +50,7 @@ const Adminlist = () => {
 
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={false} className='alldisplaytable'/>
+            <Table columns={columns} dataSource={data} pagination={false} />
         </div>
     )
 }

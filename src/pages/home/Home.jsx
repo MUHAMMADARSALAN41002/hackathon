@@ -1,18 +1,24 @@
 import { Button } from 'antd';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import Customcard from '../../components/card/Customcard';
 import Navbar from '../../components/navbar/Navbar';
 import './Home.css'
-import smit from '../../images/smit.png'
+import Nehome from './Nehome';
 const Home = () => {
     const navigate = useNavigate();
   return (
       <>
     <Navbar />
     
-    <div style={{display:"flex", justifyContent:"center", alignItems:"center", width:"100%", height:"100vh"}}>
-    <h1 className='heading-first'>saylani mass it training program </h1>
-     <Button type="primary" className='viewcourses-btn' onClick={() => navigate('/courses')}>View Courses</Button>
+    <div style={{display:"flex", justifyContent:"center", marginTop:"50px",  width:"100%", height:"100vh"}}>
+   
+    <div>
+    {/* <Customcard />  */}
+    <Nehome />
+    </div>
+ 
+     <Button style={{justifySelf:"center"}} type="primary" className='viewcourses-btn' onClick={() => navigate('/courses')}>View Courses</Button>
     </div>
  
       </>

@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Navbar from './navbar/Navbar'
+import {useNavigate} from 'react-router-dom'
+import Logincard from '../../components/card/Logincard';
+
+
 
 const AfterLogin = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("currentuser")
+    if(user) {
+  
+    } else {
+      navigate('/login')
+    }
+  })
   return (
-    <div style={{display:"flex", justifyContent:"center", alignItems:"center", width:"100%", height:"100vh"} }><h1>Welcome to App</h1> </div>
+    <>
+    <Navbar />
+    <div style={{display:"flex"}}>
+    <Logincard title="Graphic Designing"/>
+    <Logincard title="Web And Mobile Application Development"/>
+    </div>
+    </>
   )
 }
 export default AfterLogin

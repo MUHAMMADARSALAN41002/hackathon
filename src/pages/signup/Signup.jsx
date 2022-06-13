@@ -7,7 +7,7 @@ import { auth } from '../../firebase/Config';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { db } from '../../firebase/Config';
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import Navbar from '../../components/navbar/Navbar';
 
 const Signup = () => {
@@ -15,20 +15,34 @@ const Signup = () => {
 
   const onFinish = (values) => {
 
-    const { username, email, password } = values;
+    const { username, email, password, rollNo } = values;
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
         const useruid = user.uid;
-        localStorage.setItem('currentuser', useruid)
-        setDoc(doc(db, "users", user.uid), {
-          username,
-          email
-        });
-        message.success('Successfully account created');
-        navigate('/home')
+        getDocs(collection(db, "users")).then(querySnapshot => {
+          querySnapshot.forEach((docu) => {           
+                  let DrollNo = docu.data().rollNo;
+                  let Demail = docu.data().email;
+
+                  if (DrollNo === rollNo && Demail === email) {
+                    localStorage.setItem('currentuser', useruid)
+                    setDoc(doc(db, "users", user.uid), {
+                      username,
+                      email
+                    });
+                    navigate('/home')
+                  } else {
+                    console.log("error")
+                      // message.error('roll not exists'); 
+                  }
+          })
+      }).catch((error) => {
+          const errorMessage = error.message;
+          message.error(errorMessage);
+      })
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -48,7 +62,7 @@ const Signup = () => {
         },
       ]}
     >
-      <Input className='input-signup input-here' placeholder="Roll No" />
+      <Input type="number" className='input-signup input-here' placeholder="Roll No" />
     </Form.Item>
     <Form.Item name="username"
       rules={[
