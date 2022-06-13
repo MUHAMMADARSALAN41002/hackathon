@@ -22,7 +22,7 @@ const Signup = () => {
         // Signed in 
         const user = userCredential.user;
         const useruid = user.uid;
-        getDocs(collection(db, "users")).then(querySnapshot => {
+        getDocs(collection(db, "Student rollNo")).then(querySnapshot => {
           querySnapshot.forEach((docu) => {           
                   let DrollNo = docu.data().rollNo;
                   let Demail = docu.data().email;
